@@ -62,5 +62,4 @@ function validTweet(tweet) {
   } else {
     return false;
   }
-
 }

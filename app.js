@@ -1,14 +1,8 @@
 require('js-yaml');
 
 var twitter = require('ntwitter'),
-    config = require("./config.yml");
-
-var twit = new twitter({
-  consumer_key: config.twitter.consumer_key,
-  consumer_secret: config.twitter.consumer_secret,
-  access_token_key: config.twitter.access_token,
-  access_token_secret: config.twitter.access_secret
-});
+    config = require("./config.yml"),
+    twit = new twitter(config.twitter);
 
 var last_tweet;
 var can_tweet = true;

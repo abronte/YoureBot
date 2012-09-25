@@ -13,7 +13,7 @@ var twit = new twitter({
 var last_tweet;
 var can_tweet = true;
 
-console.log("Streaming...");
+console.log("The grammar police are out on patrol!\n");
 
 twit.stream('statuses/filter', {'track':'your'}, function(stream) {
   stream.on('data', function (data) {
@@ -21,9 +21,10 @@ twit.stream('statuses/filter', {'track':'your'}, function(stream) {
       console.log("SUSPECT FOUND: "+data.text) 
 
       twit.verifyCredentials(function(err, resp){
-        console.log(resp)
-      })
-      .updateStatus("you're*", {'in_reply_to_status_id':data.id}, function(resp) {
+        if(err) {
+          console.log(err);
+        }
+      }).updateStatus("you're*", {'in_reply_to_status_id':data.id}, function(resp) {
         console.log(data.user.screen_name + " APPREHENDED ");
         console.log(resp)
 

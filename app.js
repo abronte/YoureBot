@@ -20,11 +20,7 @@ twit.stream('statuses/filter', {'track':'your'}, function(stream) {
     if(validTweet(data) && can_tweet) {
       console.log("SUSPECT FOUND: "+data.text) 
 
-      twit.verifyCredentials(function(err, resp){
-        if(err) {
-          console.log(err);
-        }
-      }).updateStatus("you're*", {'in_reply_to_status_id':data.id}, function(resp) {
+      twit.updateStatus("you're*", {'in_reply_to_status_id':data.id}, function(resp) {
         console.log(data.user.screen_name + " APPREHENDED ");
         console.log(resp)
 

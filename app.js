@@ -1,6 +1,7 @@
 require('js-yaml');
 
-var twitter = require('ntwitter'),
+var exec = require('child_process').exec,
+    twitter = require('ntwitter'),
     config = require("./config.yml"),
     twit = new twitter(config.twitter);
 
@@ -12,12 +13,13 @@ console.log("The grammar police are out on patrol!\n");
 twit.stream('statuses/filter', {'track':'your'}, function(stream) {
   stream.on('data', function (data) {
     if(validTweet(data) && can_tweet) {
-      console.log("SUSPECT FOUND: "+data.text) 
+      console.log("SUSPECT FOUND: "+data.text+" - "+data.id);
 
-      twit.updateStatus("you're*", {'in_reply_to_status_id':data.id}, function(resp) {
+      //SUPER janky, but for some reason get a 401 error when trying to tweet
+      //inside here.
+      exec("ruby tweet.rb "+data.id+" "+data.user.screen_name, function(error, stdout, stderr) {
+        console.log(stdout);
         console.log(data.user.screen_name + " APPREHENDED ");
-        console.log(resp)
-
         last_tweet = new Date();
         can_tweet = false;
       });

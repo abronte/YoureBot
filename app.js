@@ -12,7 +12,7 @@ console.log("The grammar police are out on patrol!\n");
 
 twit.stream('statuses/filter', {'track':'your'}, function(stream) {
   stream.on('data', function (data) {
-    if(validTweet(data) && can_tweet) {
+    if(can_tweet && validTweet(data)) {
       console.log("SUSPECT FOUND: "+data.text+" - "+data.id);
 
       //SUPER janky, but for some reason get a 401 error when trying to tweet
@@ -27,7 +27,7 @@ twit.stream('statuses/filter', {'track':'your'}, function(stream) {
 
     var now = new Date();
 
-    if(now - last_tweet >= (300 * 1000)) {
+    if(now - last_tweet >= (24 * 60 * 60 * 1000)) {
       can_tweet = true;
     }
   });

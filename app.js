@@ -27,7 +27,7 @@ twit.stream('statuses/filter', {'track':'your'}, function(stream) {
 
     var now = new Date();
 
-    if(now - last_tweet >= (2 * 60 * 60 * 1000)) {
+    if(now - last_tweet >= (60 * 60 * 1000)) {
       can_tweet = true;
     }
   });
